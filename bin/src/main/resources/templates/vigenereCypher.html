@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-12">
                         <div class="content">
-                            <form action="/shifted" method="post" th:object="${vigenereCypher}" id = "mainForm">
+                            <form action="/vigenere" method="post" th:object="${vigenereCypher}" id = "mainForm">
                                 <div class="form-group cypherManageValues">
                                     <div class="cypher-key-attributes">
                                         <label><span class="label-desc">Cypher Key</span>
@@ -36,7 +36,7 @@
                                     <div class="cypher-mode-attributes">
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input"  name="toDecode" value="true" th:checked="*{toDecode}">
+                                                <input type="radio" class="form-check-input" id="decode" name="toDecode" value="true" th:checked="*{toDecode}">
                                                 <span class="label-desc">DECODE</span>
                                             </label>
                                         </div>

@@ -39,7 +39,7 @@
                                     <div class="cypher-mode-attributes">
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input"  name="toDecode" value="true" th:checked="*{toDecode}">
+                                                <input type="radio" class="form-check-input" id="decode" name="toDecode" value="true" th:checked="*{toDecode}">
                                                 <span class="label-desc">DECODE</span>
                                             </label>
                                         </div>
@@ -87,7 +87,7 @@
                                     </div>
                                 </div>
                                 <div class="form-buttons">
-                                    <input type="reset" value="reset" onclick="backToNormal()" class="btn btn-secondary">
+                                    <input type="button" value="reset" onclick="backToNormal()" class="btn btn-secondary">
                                     <input type="submit" value="Do it" class="btn btn-primary">
                                 </div>
                             </form>

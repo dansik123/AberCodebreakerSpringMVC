@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>aber.uni.main.assignment.web</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>AberCodebreakerMVC</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>WebCodeBreaker</name>
 	<description>Demo project for Spring Boot</description>
