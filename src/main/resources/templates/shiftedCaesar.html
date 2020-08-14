@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link href="/bootstrap-4.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <title>CodeBreaker</title>
+    <link rel="icon">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 offset-1">
+            <div class="container">
+                <div class="row full-content">
+                    <div class="col-12">
+                        <div class="navigation">
+                            <ul class = "nav nav-list">
+                                <li><a href="/" class="main-page">Main Page</a></li>
+                                <li><a href="/caesar" class="caesar-page">Caesar Cypher</a></li>
+                                <li><a href="/shifted" class="current shifted-page">Caesar Shifted Cypher</a></li>
+                                <li><a href="/vigenere" class="vigenere-page">Vinegere Cypher</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="content">
+                            <form action="/shifted" method="post" th:object="${shiftedCypher}" id = "mainForm">
+                                <div class="form-group cypherManageValues">
+                                    <div class="cypher-key-attributes">
+                                        <label><span class="label-desc">Shift</span>
+                                            <input class="form-control" type="number" min="0" max="25" th:field="*{shift}" required>
+                                        </label>
+                                        <label><span class="label-desc">Cypher Key</span>
+                                            <input class="form-control" type="text" pattern="[A-Z]+" title="One word, only capital letters" th:field="*{key}" required>
+                                        </label>
+                                    </div>
+                                    <div class="cypher-mode-attributes">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" id="decode" name="toDecode" value="true" th:checked="*{toDecode}">
+                                                <span class="label-desc">DECODE</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="toDecode" value="false" th:checked="*{!toDecode}">
+                                                <span class="label-desc">ENCODE</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class = "cypherTextValues">
+                                    <div class="form-group">
+                                        <div class="textManageButtons">
+                                            <label for="filePicker" class="file-label">
+                                                <span class="label-desc">File</span>
+                                                <input type="file" class="form-control-file" name = "file" accept=".txt" id="filePicker" disabled required>
+                                            </label>
+                                            <label for="myCheck">
+                                                <input type="checkbox" id="myCheck" onclick="myFunction()">
+                                                <span class="label-desc text-check">Use file</span>
+                                            </label>
+                                        </div>
+                                        <div class="text-input plainText-input">
+                                            <label for="textfield-text">
+                                                <textarea class="form-control" name="message" rows="10" cols="30" th:field="*{plainText}" th:value="*{plainText}" onkeyup="onlyUpperCase(this)"
+                                                          type="text" id="textfield-text" placeholder="Type text to code or decode" required></textarea>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-check file-output">
+                                            <label for="outputCheck">
+                                                <input type="checkbox" class="form-check-input" id="outputCheck" onclick="myFunction2()">
+                                                <span class="label-desc text-check">Use output file</span>
+                                            </label>
+                                        </div>
+                                        <div class="text-input resultText-input">
+                                            <label for="textfield-result">
+                                                <textarea name="message" class="form-control" rows="10" cols="30" th:field="*{resultText}"
+                                                          th:value="*{resultText}" id="textfield-result" placeholder="Decode/code text result">
+                                                </textarea>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-buttons">
+                                    <input type="button" value="reset" onclick="backToNormal()" class="btn btn-secondary">
+                                    <input type="submit" value="Do it" class="btn btn-primary">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+<script src="/javascript/mainScript.js"></script>
+<script src="/javascript/shiftedCaesarScript.js"></script>
+</body>
+</html>

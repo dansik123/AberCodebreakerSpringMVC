@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="cyphersCodebreaker">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/cyphersCodebreaker.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
