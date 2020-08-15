@@ -46,11 +46,11 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-         <groupId>aber.uni.assignment</groupId>
-         <artifactId>cyphers</artifactId>
+         <groupId>aber.uni.assignment.cyphers</groupId>
+         <artifactId>Cypher</artifactId>
          <scope>system</scope>
          <version>1.0</version>
-         <systemPath>${project.basedir}\src\main\resources\lib\cyphersCodebreaker2.jar</systemPath>
+         <systemPath>${project.basedir}/src/main/resources/lib/cyphersCodebreaker2.jar</systemPath>
       	</dependency>
 	</dependencies>
 
