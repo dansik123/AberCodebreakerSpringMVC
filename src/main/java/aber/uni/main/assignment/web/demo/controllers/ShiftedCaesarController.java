@@ -1,6 +1,6 @@
 package aber.uni.main.assignment.web.demo.controllers;
 
-import aber.uni.assignment.cyphers.VigenereCypher;
+import aber.uni.assignment.cyphers.KeyedCaesarCypher;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +16,12 @@ import java.io.IOException;
  * @version 1.0 (25th April 2020)
  */
 @Controller
-public class VigenereCypherController {
+public class ShiftedCaesarController {
 
     /**
      * Controller initialize alphabet object
      */
-    public VigenereCypherController() {
-
+    public ShiftedCaesarController() {
     }
 
     /**
@@ -31,12 +30,12 @@ public class VigenereCypherController {
      * @param model Model
      * @return Sting
      */
-    @RequestMapping(value = "/vigenere", method = RequestMethod.GET)
-    public String getVigenereCypherPage(Model model)
+    @RequestMapping(value = "/shifted", method = RequestMethod.GET)
+    public String getCaesarShiftedPage(Model model)
     {
-        VigenereCypher cypher = new VigenereCypher("", "",true);
-        model.addAttribute("vigenereCypher",cypher);
-        return "vigenereCypher";
+        KeyedCaesarCypher cypher = new KeyedCaesarCypher("",0,"",true);
+        model.addAttribute("shiftedCypher",cypher);
+        return "shiftedCaesar";
     }
 
     /**
@@ -47,16 +46,14 @@ public class VigenereCypherController {
      * @param model Model
      * @return String
      */
-    @RequestMapping(value = "/vigenere",
-            method = RequestMethod.POST,
-            params={"key","toDecode","plainText","resultText"})
-    public String textAndKeyToText(@ModelAttribute VigenereCypher cypher,
+    @RequestMapping(value = "/shifted", method = RequestMethod.POST, params={"key","toDecode","plainText","resultText"})
+    public String textAndKeyToText(@ModelAttribute KeyedCaesarCypher cypher,
                                    Model model)
     {
-        cypher.initializeMatrix();
+        cypher.createAlphabet();
         cypher.coded();
-        model.addAttribute("vigenereCypher", cypher);
-        return "vigenereCypher";
+        model.addAttribute("shiftedCypher", cypher);
+        return "shiftedCaesar";
     }
 
 
@@ -68,13 +65,12 @@ public class VigenereCypherController {
      * @param cypher CaesarModel
      * @return byte[]
      */
-    @RequestMapping(value = "/vigenereCypherFile.txt",
-            method = RequestMethod.POST,
+    @RequestMapping(value = "/shiftedCypherFile.txt", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE,
             params={"key","plainText","toDecode"})
     public @ResponseBody
-    byte[] textAndKeyToFile(@ModelAttribute VigenereCypher cypher){
-        cypher.initializeMatrix();
+    byte[] textAndKeyToFile(@ModelAttribute KeyedCaesarCypher cypher){
+        cypher.createAlphabet();
         cypher.coded();
         return cypher.getResultText().getBytes();
     }
@@ -90,17 +86,17 @@ public class VigenereCypherController {
      * @return byte[]
      * @throws IOException access to file exception
      */
-    @RequestMapping(value = "/vigenereCypherFile.txt",
-            method = RequestMethod.POST,
+    @RequestMapping(value = "/shiftedCypherFile.txt", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public @ResponseBody byte[] fileAndKeyToFile(@RequestParam("file") MultipartFile file,
                                                  @RequestParam("key") String key,
+                                                 @RequestParam("shift") int shift,
                                                  @RequestParam("toDecode") boolean toDecode) throws IOException {
         byte[] bytes = file.getBytes();
-        //plain text require upper case letters with no spaces and punctuation signs
-        VigenereCypher vigenereCypher = new VigenereCypher(new String(bytes).toUpperCase().replaceAll("[\\x20-\\x40]", ""),key,toDecode);
-        vigenereCypher.coded();
-        return vigenereCypher.getResultText().getBytes();
+        KeyedCaesarCypher keyedCaesarCypher = new KeyedCaesarCypher(new String(bytes),shift,key,toDecode);
+        keyedCaesarCypher.createAlphabet();
+        keyedCaesarCypher.coded();
+        return keyedCaesarCypher.getResultText().getBytes();
     }
 
     /**
@@ -115,17 +111,17 @@ public class VigenereCypherController {
      * and returns page template with result in textResult variable
      * @throws IOException access to file exception
      */
-    @RequestMapping(value = "/vigenere", method = RequestMethod.POST)
+    @RequestMapping(value = "/shifted", method = RequestMethod.POST)
     public String fileAndKeyToText(@RequestParam("file") MultipartFile file,
                                    @RequestParam("key") String key,
+                                   @RequestParam("shift") int shift,
                                    @RequestParam("toDecode") boolean toDecode,
                                    Model model) throws IOException {
         byte[] bytes = file.getBytes();
-        //plain text require upper case letters with no spaces and punctuation signs
-        VigenereCypher cypher = new VigenereCypher(new String(bytes).toUpperCase().replaceAll("[\\x20-\\x40]", ""),key,toDecode);
+        KeyedCaesarCypher cypher = new KeyedCaesarCypher(new String(bytes), shift, key, toDecode);
+        cypher.createAlphabet();
         cypher.coded();
-        model.addAttribute("vigenereCypher", cypher);
-        return "vigenereCypher";
+        model.addAttribute("shiftedCypher", cypher);
+        return "shiftedCaesar";
     }
 }
-

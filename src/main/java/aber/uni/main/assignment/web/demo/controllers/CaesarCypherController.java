@@ -1,27 +1,27 @@
 package aber.uni.main.assignment.web.demo.controllers;
 
-import aber.uni.assignment.cyphers.KeyedCaesarCypher;
+import aber.uni.assignment.cyphers.CaesarCypher;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
+import java.io.*;
 
 /**
- * ShiftedCaesarController handle all request from server
- * for Caesar Shifted Cypher
+ * IndexController Handle all request from server
+ * for Caesar Cypher
  * @author Daniel Jozef Sikora
  * @version 1.0 (25th April 2020)
  */
 @Controller
-public class ShiftedCaesarController {
+public class CaesarCypherController {
 
     /**
      * Controller initialize alphabet object
      */
-    public ShiftedCaesarController() {
+    public CaesarCypherController() {
+
     }
 
     /**
@@ -30,12 +30,12 @@ public class ShiftedCaesarController {
      * @param model Model
      * @return Sting
      */
-    @RequestMapping(value = "/shifted", method = RequestMethod.GET)
-    public String getCaesarShiftedPage(Model model)
+    @RequestMapping(value = "/caesar", method = RequestMethod.GET)
+    public String getCaesarCypherPage(Model model)
     {
-        KeyedCaesarCypher cypher = new KeyedCaesarCypher("",0,"",true);
-        model.addAttribute("shiftedCypher",cypher);
-        return "shiftedCaesar";
+        CaesarCypher caesarCypher = new CaesarCypher("",0,true);
+        model.addAttribute("cypher",caesarCypher);
+        return "caesarCypher";
     }
 
     /**
@@ -46,14 +46,13 @@ public class ShiftedCaesarController {
      * @param model Model
      * @return String
      */
-    @RequestMapping(value = "/shifted", method = RequestMethod.POST, params={"key","toDecode","plainText","resultText"})
-    public String textAndKeyToText(@ModelAttribute KeyedCaesarCypher cypher,
-                                   Model model)
+    @RequestMapping(value = "/caesar", method = RequestMethod.POST,
+                    params={"key","toDecode","plainText","resultText"})
+    public String textAndKeyToText(@ModelAttribute CaesarCypher cypher, Model model)
     {
-        cypher.createAlphabet();
         cypher.coded();
-        model.addAttribute("shiftedCypher", cypher);
-        return "shiftedCaesar";
+        model.addAttribute("cypher", cypher);
+        return "caesarCypher";
     }
 
 
@@ -65,12 +64,10 @@ public class ShiftedCaesarController {
      * @param cypher CaesarModel
      * @return byte[]
      */
-    @RequestMapping(value = "/shiftedCypherFile.txt", method = RequestMethod.POST,
+    @RequestMapping(value = "/cypherFile.txt", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE,
             params={"key","plainText","toDecode"})
-    public @ResponseBody
-    byte[] textAndKeyToFile(@ModelAttribute KeyedCaesarCypher cypher){
-        cypher.createAlphabet();
+    public @ResponseBody byte[] textAndKeyToFile(@ModelAttribute CaesarCypher cypher){
         cypher.coded();
         return cypher.getResultText().getBytes();
     }
@@ -86,23 +83,20 @@ public class ShiftedCaesarController {
      * @return byte[]
      * @throws IOException access to file exception
      */
-    @RequestMapping(value = "/shiftedCypherFile.txt", method = RequestMethod.POST,
+    @RequestMapping(value = "/cypherFile.txt", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public @ResponseBody byte[] fileAndKeyToFile(@RequestParam("file") MultipartFile file,
-                                                 @RequestParam("key") String key,
-                                                 @RequestParam("shift") int shift,
+                                                 @RequestParam("key") int key,
                                                  @RequestParam("toDecode") boolean toDecode) throws IOException {
         byte[] bytes = file.getBytes();
-        //plain text require upper case letters with no spaces and punctuation signs
-        KeyedCaesarCypher keyedCaesarCypher = new KeyedCaesarCypher(new String(bytes).toUpperCase().replaceAll("[\\x20-\\x40]", ""),shift,key,toDecode);
-        keyedCaesarCypher.createAlphabet();
-        keyedCaesarCypher.coded();
-        return keyedCaesarCypher.getResultText().getBytes();
+        CaesarCypher cypher = new CaesarCypher(new String(bytes),key,toDecode);
+        cypher.coded();
+        return cypher.getResultText().getBytes();
     }
 
     /**
      * Method handle POST request from server
-     * Gets values key, file, toDecode as params
+     * Gets values key, file toDecode as params
      * and returns byte array
      * which on client side is text file as result
      * @param model Model
@@ -112,18 +106,16 @@ public class ShiftedCaesarController {
      * and returns page template with result in textResult variable
      * @throws IOException access to file exception
      */
-    @RequestMapping(value = "/shifted", method = RequestMethod.POST)
+    @RequestMapping(value = "/caesar", method = RequestMethod.POST)
     public String fileAndKeyToText(@RequestParam("file") MultipartFile file,
-                                   @RequestParam("key") String key,
-                                   @RequestParam("shift") int shift,
+                                   @RequestParam("key") int key,
                                    @RequestParam("toDecode") boolean toDecode,
                                    Model model) throws IOException {
         byte[] bytes = file.getBytes();
-        //plain text require upper case letters with no spaces and punctuation signs
-        KeyedCaesarCypher cypher = new KeyedCaesarCypher(new String(bytes).toUpperCase().replaceAll("[\\x20-\\x40]", ""), shift, key, toDecode);
-        cypher.createAlphabet();
+        CaesarCypher cypher = new CaesarCypher(new String(bytes),key,toDecode);
         cypher.coded();
-        model.addAttribute("shiftedCypher", cypher);
-        return "shiftedCaesar";
+        model.addAttribute("cypher", cypher);
+        return "caesarCypher";
     }
 }
+

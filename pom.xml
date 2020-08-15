@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>aber.uni.main.assignment.web</groupId>
 	<artifactId>AberCodebreakerMVC</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<name>WebCodeBreaker</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -46,12 +46,12 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-         <groupId>cypherCodebreaker</groupId>
-         <artifactId>cypherCodebreaker</artifactId>
+         <groupId>aber.uni.assignment</groupId>
+         <artifactId>cyphers</artifactId>
          <scope>system</scope>
          <version>1.0</version>
-         <systemPath>${basedir}\src\lib\cyphersCodebreaker2.jar</systemPath>
-      </dependency>
+         <systemPath>${project.basedir}\src\main\resources\lib\cyphersCodebreaker2.jar</systemPath>
+      	</dependency>
 	</dependencies>
 
 	<build>
