@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <link href="/bootstrap-4.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="./bootstrap-4.5.2/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="/css/style.css" rel="stylesheet" type="text/css"/>
     <meta charset="UTF-8">
     <title>CodeBreaker</title>
@@ -30,7 +30,7 @@
                                 <div class="form-group cypherManageValues">
                                     <div class="cypher-key-attributes">
                                         <label><span class="label-desc">Cypher Key</span>
-                                            <input class="form-control" type="text" pattern="[A-Z]+" title="One word, only capital letters" th:field="*{key}" required>
+                                            <input id="key" class="form-control" type="text" pattern="[A-Z]+" title="One word, only capital letters" th:field="*{key}" required>
                                         </label>
                                     </div>
                                     <div class="cypher-mode-attributes">
@@ -63,7 +63,7 @@
                                         <div class="text-input plainText-input">
                                             <label for="textfield-text">
                                                 <textarea class="form-control" name="message" rows="10" cols="30" th:field="*{plainText}" th:value="*{plainText}" onkeyup="onlyUpperCase(this)"
-                                                          type="text" id="textfield-text" placeholder="Type text to code or decode" required></textarea>
+                                                          id="textfield-text" placeholder="Type text to code or decode" required></textarea>
                                             </label>
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                                     </div>
                                 </div>
                                 <div class="form-buttons">
-                                    <input type="reset" value="reset" onclick="backToNormal()" class="btn btn-secondary">
+                                    <input type="button" value="reset" onclick="backToNormal()" class="btn btn-secondary">
                                     <input type="submit" value="Do it" class="btn btn-primary">
                                 </div>
                             </form>
@@ -95,7 +95,8 @@
         </div>
     </div>
 </div>
-<script src="/bootstrap-4.4.1/js/bootstrap.js"></script>
+<script src="./javascript/jquery/jquery-3.5.1.js"></script>
+<script src="./bootstrap-4.5.2/js/bootstrap.js"></script>
 <script src="/javascript/mainScript.js"></script>
 <script src="/javascript/vinegereCypherScript.js"></script>
 </body>

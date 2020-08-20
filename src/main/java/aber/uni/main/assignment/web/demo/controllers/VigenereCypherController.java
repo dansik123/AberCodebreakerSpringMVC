@@ -1,6 +1,6 @@
 package aber.uni.main.assignment.web.demo.controllers;
 
-import aber.uni.assignment.cyphers.VigenereCypher;
+import aber.uni.main.assignment.web.demo.cyphers.VigenereCypher;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

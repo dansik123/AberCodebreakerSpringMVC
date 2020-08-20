@@ -46,13 +46,9 @@ function backToNormal()
     text1.value = "";
     text2.value = "";
     
-    if(typeof(key.value)==="string")
+    if(key != null)
     {
     	key.value = "";
-    }
-    else
-    {
-    	key.value = 0;
     }
     
     if(typeof(shift) != 'undefined' && shift != null)
